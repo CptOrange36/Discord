@@ -19,6 +19,9 @@ jobs:
     - name: Add conda to system path
       run: |
         echo $CONDA/bin >> $GITHUB_PATH
+    - name: Check YAML file for formatting errors
+      run: |
+        yamllint environment.yml
     - name: Install dependencies
       working-directory: ./Discord
       run: |
