@@ -17,17 +17,9 @@ jobs:
     - name: Add conda to system path
       run: |
         echo $CONDA/bin >> $GITHUB_PATH
-    - name: Cache Conda packages
-      uses: actions/cache@v3
-      id: cache
-      with:
-        path: ~/.conda/pkgs
-        key: ${{ runner.os }}-conda-${{ hashFiles('environment.yml') }}
-        restore-keys: |
-          ${{ runner.os }}-conda-
     - name: Install dependencies
       run: |
-        conda env update --file environment.yml --name base --channel conda-forge
+        conda env update --file ../environment.yml --name base
     - name: Lint with flake8
       run: |
         conda install flake8
@@ -38,7 +30,7 @@ jobs:
         conda install pytest
         pytest
     - name: Deploy to Railway.app
-      uses: railwayapp/deploy@v1
+      uses: railwayapp/github-deploy@v1
       with:
         api-key: ${{ secrets.RAILWAY_API_KEY }}
         project-id: ${{ secrets.RAILWAY_PROJECT_ID }}
