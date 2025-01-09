@@ -30,7 +30,8 @@ jobs:
         conda install pytest
         pytest
     - name: Deploy to Railway.app
-      uses: railwayapp/github-deploy@v1
-      with:
-        api-key: ${{ secrets.RAILWAY_API_KEY }}
-        project-id: ${{ secrets.RAILWAY_PROJECT_ID }}
+      env:
+        RAILWAY_API_KEY: ${{ secrets.RAILWAY_API_KEY }}
+        RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
+      run: |
+        railway run
