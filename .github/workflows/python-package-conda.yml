@@ -22,7 +22,7 @@ jobs:
     - name: Install dependencies
       working-directory: ./Discord
       run: |
-        conda env update --file environment.yml --name base --no-deps
+        conda env update --file environment.yml --name base
     - name: Lint with flake8
       working-directory: ./Discord
       run: |
