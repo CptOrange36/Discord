@@ -20,7 +20,7 @@ intents.presences = False
 intents.message_content = True
 intents.voice_states = False
 
-token = userdata.get('TOKEN')
+token = os.getenv('DISCORD_TOKEN')
 if token is None:
     logging.error("TOKEN environment variable is not set")
     print("TOKEN environment variable is not set")
