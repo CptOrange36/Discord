@@ -10,6 +10,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        path: 'Discord'
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
@@ -18,10 +20,23 @@ jobs:
       run: |
         echo $CONDA/bin >> $GITHUB_PATH
     - name: Install dependencies
+      working-directory: ./Discord
       run: |
-        conda env update --file environment.yml --name base
+        conda env update --file environment.yml --name base --no-deps
     - name: Lint with flake8
+      working-directory: ./Discord
       run: |
         conda install flake8
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 . --count --exit-zero --max-complexity=10 --
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      working-directory: ./Discord
+      run: |
+        conda install pytest
+        pytest
+    - name: Deploy to Railway.app
+      env:
+        RAILWAY_API_KEY: ${{ secrets.RAILWAY_API_KEY }}
+        RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
+      run: |
+        railway run
