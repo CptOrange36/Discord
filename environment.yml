@@ -1,0 +1,3 @@
+- name: Copy environment.yml file
+  run: |
+    cp ./environment.yml ../
